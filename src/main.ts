@@ -1,6 +1,7 @@
 import {Aurelia} from 'aurelia-framework'
 import * as environment from '../config/environment.json';
 import {PLATFORM} from 'aurelia-pal';
+// import 'whatwg-fetch';
 
 export function configure(aurelia: Aurelia) {
   aurelia.use
@@ -15,3 +16,6 @@ export function configure(aurelia: Aurelia) {
 
   aurelia.start().then(() => aurelia.setRoot(PLATFORM.moduleName('app')));
 }
+
+
+

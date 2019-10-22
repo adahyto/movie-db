@@ -2,6 +2,7 @@
   <require from="./movie"></require>
   <require from="./movie-list.css"></require>
   <h2>${title}</h2>
+  <button class="btn" (click)="popcornTime(title)" >Popcorn Time</button>
   <div class="movie-list row">
     <div class="col-sm-4 movie" repeat.for="movie of movies">
         <movie model.bind="movie"></movie>
