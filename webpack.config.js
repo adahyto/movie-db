@@ -9,7 +9,6 @@ const { ProvidePlugin } = require('webpack');
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 var ServiceWorkerWebpackPlugin = require('serviceworker-webpack-plugin');
-const WebpackPwaManifest = require('webpack-pwa-manifest');
 
 
 // config helpers:
@@ -23,6 +22,7 @@ const outDir = path.resolve(__dirname, project.platform.output);
 const srcDir = path.resolve(__dirname, 'src');
 const nodeModulesDir = path.resolve(__dirname, 'node_modules');
 const baseUrl = '/';
+const CopyPlugin = require('copy-webpack-plugin');
 
 const cssRules = [
   { loader: 'css-loader' },
@@ -154,24 +154,10 @@ module.exports = ({ production } = {}, { extractCss, analyze, tests, hmr, port, 
       })
     ]
   },
-  plugins: [
-    new WebpackPwaManifest({
-      name: "My Progressive Web Application",
-      short_name: "Progressive",
-      start_url: "/",
-      orientation: "portrait",
-      display: "fullscreen",
-      description: 'Description!',
-      background_color: '#01579b',
-      theme_color: '#01579b',
-      icons: [
-        {
-          src: path.resolve('src/images/icons/icon.png'),
-          sizes: [96, 128, 192, 256, 384, 512],
-          destination: path.join('assets', 'icons')
-        }
-      ]
-    }),
+  plugins: [ new CopyPlugin([
+    { from: 'static', to: 'static' },
+    { from: 'manifest.json', to: 'manifest.json', toType: 'file'},
+  ]),
     new ServiceWorkerWebpackPlugin({
       entry: path.join(__dirname, 'src/sw.js'),
     }),
